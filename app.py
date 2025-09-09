@@ -5,11 +5,9 @@ from dotenv import load_dotenv
 
 # .env 파일에서 API 키 로드
 def get_api_key():
-    if os.path.exists('.env'):
-        load_dotenv('.env')
-        api_key = os.getenv('OPENAI_API_KEY')
-        if api_key:
-            return api_key
+    openai_api_key = st.secrets['openai']['api_key']
+    if openai_api_key:
+        return openai_api_key
     # .env 파일이 없거나 키가 없으면 입력 받기
     return st.text_input('OpenAI API 키를 입력하세요', type='password')
 
@@ -72,4 +70,4 @@ if api_key:
         st.markdown(result)
         save_to_md(result)
 else:
-    st.info('OpenAI API 키를 입력하거나 .env 파일을 준비해 주세요.')
+    st.info('OpenAI API 키를 입력하거나 secret 파일을 준비해 주세요.')
